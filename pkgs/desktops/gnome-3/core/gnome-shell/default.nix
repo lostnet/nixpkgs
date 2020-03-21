@@ -50,15 +50,33 @@ in stdenv.mkDerivation rec {
   ];
 
   patches = [
+    # Fix dependencies.
+    # https://gitlab.gnome.org/GNOME/gnome-shell/merge_requests/1114
     (fetchpatch {
       name = "0001-build-Add-missing-dependency-to-run-js-test.patch";
       url = https://bug787864.bugzilla-attachments.gnome.org/attachment.cgi?id=360016;
       sha256 = "1dmahd8ysbzh33rxglba0fbq127aw9h14cl2a2bw9913vjxhxijm";
     })
+
+    # Hardcode paths to various dependencies so that they can be found at runtime.
     (substituteAll {
       src = ./fix-paths.patch;
       inherit libgnomekbd unzip;
       gsettings = "${glib.bin}/bin/gsettings";
+    })
+
+    # Fix ibus launching regression.
+    # https://gitlab.gnome.org/GNOME/gnome-shell/merge_requests/1080
+    (fetchpatch {
+      url = "https://gitlab.gnome.org/GNOME/gnome-shell/commit/94f6976ddd6337593203fdcdd2e3644774408dfa.patch";
+      sha256 = "PGmFQhqqd3gK+3kp0dlmlYd2G5ZTIQpfE++Q03Ghkx0=";
+    })
+
+    # Fix typing regression with ibus.
+    # https://gitlab.gnome.org/GNOME/gnome-shell/merge_requests/1084
+    (fetchpatch {
+      url = "https://gitlab.gnome.org/GNOME/gnome-shell/commit/b18469427e5c19402111de5fe9888bceec0eaacd.patch";
+      sha256 = "1M+3kjt7K61BFgk1Zf9XfK1ziilQGa60PD8xtVjnQec=";
     })
   ];
 
