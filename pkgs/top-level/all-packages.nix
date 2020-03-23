@@ -15363,6 +15363,10 @@ in
     erlang = erlangR21;
   };
 
+  couchdb3 = callPackage ../servers/http/couchdb/3.0.0.nix {
+    spidermonkey = spidermonkey_60;
+  };
+
   couchpotato = callPackage ../servers/couchpotato {};
 
   dex-oidc = callPackage ../servers/dex { };
