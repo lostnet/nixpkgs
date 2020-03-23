@@ -13,7 +13,7 @@ let
       view_index_dir = ${cfg.viewIndexDir}
     '' + (if cfg.adminPass != null then
     ''
-      [admin]
+      [admins]
       ${cfg.adminUser} = ${cfg.adminPass}
     '' else
     ''
