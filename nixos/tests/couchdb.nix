@@ -48,12 +48,12 @@ with lib;
     couchdb1.wait_until_succeeds(
         "${curlJqCheck "" "GET" "_all_dbs" ". | length" "2"}"
     )
-    couchdb1.succeed("${curlJqCheck "" "PUT" "foo" ".ok" "true"}")
+    couchdb1.succeed("${curlJqCheck testlogin "PUT" "foo" ".ok" "true"}")
     couchdb1.succeed(
         "${curlJqCheck "" "GET" "_all_dbs" ". | length" "3"}"
     )
     couchdb1.succeed(
-        "${curlJqCheck "" "DELETE" "foo" ".ok" "true"}"
+        "${curlJqCheck testlogin "DELETE" "foo" ".ok" "true"}"
     )
     couchdb1.succeed(
         "${curlJqCheck "" "GET" "_all_dbs" ". | length" "2"}"
@@ -66,12 +66,12 @@ with lib;
     couchdb2.wait_until_succeeds(
         "${curlJqCheck "" "GET" "_all_dbs" ". | length" "0"}"
     )
-    couchdb2.succeed("${curlJqCheck "" "PUT" "foo" ".ok" "true"}")
+    couchdb2.succeed("${curlJqCheck testlogin "PUT" "foo" ".ok" "true"}")
     couchdb2.succeed(
         "${curlJqCheck "" "GET" "_all_dbs" ". | length" "1"}"
     )
     couchdb2.succeed(
-        "${curlJqCheck "" "DELETE" "foo" ".ok" "true"}"
+        "${curlJqCheck testlogin "DELETE" "foo" ".ok" "true"}"
     )
     couchdb2.succeed(
         "${curlJqCheck "" "GET" "_all_dbs" ". | length" "0"}"
