@@ -6,8 +6,8 @@ let
       { environment.systemPackages = with pkgs; [ jq ];
         services.couchdb.enable = true;
         services.couchdb.package = couchpkg;
-	services.couchdb.adminUser = user;
-	services.couchdb.adminPass = passwd;
+        services.couchdb.adminUser = user;
+        services.couchdb.adminPass = passwd;
       };
   testuser = "testadmin";
   testpass = "cowabunga";
@@ -22,7 +22,7 @@ with lib;
   meta = with pkgs.stdenv.lib.maintainers; {
     maintainers = [ fpletz ];
   };
-  
+
   nodes = {
     couchdb1 = makeNode pkgs.couchdb testuser testpass;
     couchdb2 = makeNode pkgs.couchdb2 testuser testpass;
