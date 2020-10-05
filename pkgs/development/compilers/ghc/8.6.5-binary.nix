@@ -119,7 +119,17 @@ stdenv.mkDerivation rec {
 
   # On Linux, use patchelf to modify the executables so that they can
   # find editline/gmp.
-  postFixup = stdenv.lib.optionalString stdenv.isLinux ''
+  postFixup = stdenv.lib.optionalString stdenv.hostPlatform.isAarch64 ''
+    for p in $(find "$out/lib" -type f -executable -name "*\.so"); do
+      (cd $out; ln -s $p)
+    done
+    for p in $(find "$out" -type f -executable); do
+      if isELF "$p"; then
+        echo "Patchelf shrinking $p"
+        patchelf --set-rpath "$out:$(patchelf --print-rpath $p)" --shrink-rpath $p
+      fi
+    done
+  '' +  stdenv.lib.optionalString stdenv.isLinux ''
     for p in $(find "$out" -type f -executable); do
       if isELF "$p"; then
         echo "Patchelfing $p"
