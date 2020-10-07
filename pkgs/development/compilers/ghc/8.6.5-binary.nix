@@ -119,14 +119,29 @@ stdenv.mkDerivation rec {
 
   # On Linux, use patchelf to modify the executables so that they can
   # find editline/gmp.
-  postFixup = stdenv.lib.optionalString stdenv.isLinux ''
-    for p in $(find "$out" -type f -executable); do
-      if isELF "$p"; then
-        echo "Patchelfing $p"
-        patchelf --set-rpath "${libPath}:$(patchelf --print-rpath $p)" $p
-      fi
-    done
-  '' + stdenv.lib.optionalString stdenv.isDarwin ''
+  postFixup = stdenv.lib.optionalString stdenv.isLinux
+    (if stdenv.hostPlatform.isAarch64 then
+      ''
+      for p in $(find "$out/lib" -type f -name "*\.so*"); do
+        (cd $out; ln -s $p)
+      done
+
+      for p in $(find "$out" -type f -executable); do
+        if isELF "$p"; then
+          echo "Patchelfing $p"
+          patchelf --set-rpath "${libPath}:$out" $p
+        fi
+      done
+      ''
+    else
+      ''
+      for p in $(find "$out" -type f -executable); do
+        if isELF "$p"; then
+          echo "Patchelfing $p"
+          patchelf --set-rpath "${libPath}:$(patchelf --print-rpath $p)" $p
+        fi
+      done
+    '') + stdenv.lib.optionalString stdenv.isDarwin ''
     # not enough room in the object files for the full path to libiconv :(
     for exe in $(find "$out" -type f -executable); do
       isScript $exe && continue
@@ -160,6 +175,11 @@ stdenv.mkDerivation rec {
     enableShared = true;
   };
 
-  meta.license = stdenv.lib.licenses.bsd3;
-  meta.platforms = ["x86_64-linux" "aarch64-linux" "i686-linux" "x86_64-darwin"];
+  meta = {
+    homepage = "http://haskell.org/ghc";
+    description = "The Glasgow Haskell Compiler";
+    license = stdenv.lib.licenses.bsd3;
+    platforms = ["x86_64-linux" "aarch64-linux" "i686-linux" "x86_64-darwin"];
+    maintainers = with stdenv.lib.maintainers; [ lostnet ];
+  };
 }
