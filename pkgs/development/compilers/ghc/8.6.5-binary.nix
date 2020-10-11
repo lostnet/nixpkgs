@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl, perl, gcc
 , ncurses5, gmp, glibc, libiconv
-, llvmPackages
+, llvmPackages, elfutils
 }:
 
 # Prebuilt only does native
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
   }.${stdenv.hostPlatform.system}
     or (throw "cannot bootstrap GHC on this platform"));
 
-  nativeBuildInputs = [ perl ];
+  nativeBuildInputs = [ perl elfutils ];
   propagatedBuildInputs = stdenv.lib.optionals useLLVM [ llvmPackages.llvm ];
 
   # Cannot patchelf beforehand due to relative RPATHs that anticipate
@@ -88,7 +88,7 @@ stdenv.mkDerivation rec {
     '' +
     # Rename needed libraries and binaries, fix interpreter
     stdenv.lib.optionalString stdenv.isLinux ''
-      find . -type f -perm -0100 -exec patchelf \
+      find . -type f -perm -0100 -print -exec eu-readelf -S {} \; -exec patchelf \
           --replace-needed libncurses${stdenv.lib.optionalString stdenv.is64bit "w"}.so.5 libncurses.so \
           --replace-needed libtinfo.so libtinfo.so.5 \
           --interpreter ${glibcDynLinker} {} \;
@@ -119,14 +119,34 @@ stdenv.mkDerivation rec {
 
   # On Linux, use patchelf to modify the executables so that they can
   # find editline/gmp.
-  postFixup = stdenv.lib.optionalString stdenv.isLinux ''
-    for p in $(find "$out" -type f -executable); do
-      if isELF "$p"; then
-        echo "Patchelfing $p"
-        patchelf --set-rpath "${libPath}:$(patchelf --print-rpath $p)" $p
-      fi
-    done
-  '' + stdenv.lib.optionalString stdenv.isDarwin ''
+  postFixup = stdenv.lib.optionalString stdenv.isLinux
+    (if stdenv.hostPlatform.isAarch64 then
+      ''
+      (cd $out/lib; ln -s ${ncurses5.out}/lib/libtinfo.so.5)
+      (cd $out/lib; ln -s ${gmp.out}/lib/libgmp.so.10)
+      for p in $(find "$out/lib" -type f -name "*\.so*"); do
+        (cd $out/lib; ln -s $p)
+      done
+
+      for p in $(find "$out/lib" -type f -executable); do
+        if isELF "$p"; then
+	  echo "Unpatched $p elf"
+          eu-readelf -S $p
+          echo "Patchelfing $p"
+          patchelf --set-rpath "\$ORIGIN:\$ORIGIN/../.." $p
+          eu-readelf -S $p
+        fi
+      done
+      ''
+    else
+      ''
+      for p in $(find "$out" -type f -executable); do
+        if isELF "$p"; then
+          echo "Patchelfing $p"
+          patchelf --set-rpath "${libPath}:$(patchelf --print-rpath $p)" $p
+        fi
+      done
+    '') + stdenv.lib.optionalString stdenv.isDarwin ''
     # not enough room in the object files for the full path to libiconv :(
     for exe in $(find "$out" -type f -executable); do
       isScript $exe && continue
@@ -160,6 +180,11 @@ stdenv.mkDerivation rec {
     enableShared = true;
   };
 
-  meta.license = stdenv.lib.licenses.bsd3;
-  meta.platforms = ["x86_64-linux" "aarch64-linux" "i686-linux" "x86_64-darwin"];
+  meta = {
+    homepage = "http://haskell.org/ghc";
+    description = "The Glasgow Haskell Compiler";
+    license = stdenv.lib.licenses.bsd3;
+    platforms = ["x86_64-linux" "aarch64-linux" "i686-linux" "x86_64-darwin"];
+    maintainers = with stdenv.lib.maintainers; [ lostnet ];
+  };
 }

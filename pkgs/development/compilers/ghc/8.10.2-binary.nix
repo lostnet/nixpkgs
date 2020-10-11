@@ -85,6 +85,9 @@ stdenv.mkDerivation rec {
 
     # We have to patch the GMP paths for the integer-gmp package.
     ''
+      find . -name package.conf.in \
+          -exec sed -i "s@FFI_LIB_DIR@FFI_LIB_DIR ${numactl.out}/lib@g" {} \;
+    '' +    ''
       find . -name integer-gmp.buildinfo \
           -exec sed -i "s@extra-lib-dirs: @extra-lib-dirs: ${gmp.out}/lib@" {} \;
     '' + stdenv.lib.optionalString stdenv.isDarwin ''
@@ -128,14 +131,32 @@ stdenv.mkDerivation rec {
 
   # On Linux, use patchelf to modify the executables so that they can
   # find editline/gmp.
-  postFixup = stdenv.lib.optionalString stdenv.isLinux ''
-    for p in $(find "$out" -type f -executable); do
-      if isELF "$p"; then
-        echo "Patchelfing $p"
-        patchelf --set-rpath "${libPath}:$(patchelf --print-rpath $p)" $p
-      fi
-    done
-  '' + stdenv.lib.optionalString stdenv.isDarwin ''
+  postFixup = stdenv.lib.optionalString stdenv.isLinux
+    (if stdenv.hostPlatform.isAarch64 then
+      ''
+      (cd $out/lib; ln -s ${ncurses6.out}/lib/libtinfo.so.6)
+      (cd $out/lib; ln -s ${gmp.out}/lib/libgmp.so.10)
+      (cd $out/lib; ln -s ${numactl.out}/lib/libnuma.so.1)
+      for p in $(find "$out/lib" -type f -name "*\.so*"); do
+        (cd $out/lib; ln -s $p)
+      done
+
+      for p in $(find "$out/lib" -type f -executable); do
+        if isELF "$p"; then
+          echo "Patchelfing $p"
+          patchelf --set-rpath "\$ORIGIN:\$ORIGIN/../.." $p
+        fi
+      done
+      ''
+    else
+      ''
+      for p in $(find "$out" -type f -executable); do
+        if isELF "$p"; then
+          echo "Patchelfing $p"
+          patchelf --set-rpath "${libPath}:$(patchelf --print-rpath $p)" $p
+        fi
+      done
+    '') + stdenv.lib.optionalString stdenv.isDarwin ''
     # not enough room in the object files for the full path to libiconv :(
     for exe in $(find "$out" -type f -executable); do
       isScript $exe && continue
