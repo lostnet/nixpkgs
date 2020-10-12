@@ -71,6 +71,7 @@
 , "escape-string-regexp"
 , "eslint"
 , "eslint_d"
+, "expo-cli"
 , {"fast-cli": "1.x"}
 , "fkill-cli"
 , "forever"
@@ -120,6 +121,7 @@
 , "mastodon-bot"
 , "mathjax"
 , "meat"
+, "@mermaid-js/mermaid-cli"
 , "mirakurun"
 , "mocha"
 , "multi-file-swagger"

@@ -146,6 +146,8 @@ in {
 
   aafigure = callPackage ../development/python-modules/aafigure { };
 
+  abodepy = callPackage ../development/python-modules/abodepy { };
+
   absl-py = callPackage ../development/python-modules/absl-py { };
 
   accupy = callPackage ../development/python-modules/accupy { };
@@ -164,7 +166,11 @@ in {
 
   adb-homeassistant = callPackage ../development/python-modules/adb-homeassistant { };
 
+  adb-shell = callPackage ../development/python-modules/adb-shell { };
+
   addic7ed-cli = callPackage ../development/python-modules/addic7ed-cli { };
+
+  adguardhome= callPackage ../development/python-modules/adguardhome { };
 
   aenum = callPackage ../development/python-modules/aenum { };
 
@@ -228,6 +234,8 @@ in {
 
   aiomysql = callPackage ../development/python-modules/aiomysql { };
 
+  aionotify = callPackage ../development/python-modules/aionotify { };
+
   aioprocessing = callPackage ../development/python-modules/aioprocessing { };
 
   aioredis = callPackage ../development/python-modules/aioredis { };
@@ -275,6 +283,8 @@ in {
   amqp = callPackage ../development/python-modules/amqp { };
 
   amqplib = callPackage ../development/python-modules/amqplib { };
+
+  androidtv = callPackage ../development/python-modules/androidtv { };
 
   androguard = callPackage ../development/python-modules/androguard { };
 
@@ -494,6 +504,8 @@ in {
 
   aws-xray-sdk = callPackage ../development/python-modules/aws-xray-sdk { };
 
+  azure-appconfiguration = callPackage ../development/python-modules/azure-appconfiguration { };
+
   azure-applicationinsights = callPackage ../development/python-modules/azure-applicationinsights { };
 
   azure-batch = callPackage ../development/python-modules/azure-batch { };
@@ -519,6 +531,8 @@ in {
   azure-identity = callPackage ../development/python-modules/azure-identity { };
 
   azure-keyvault = callPackage ../development/python-modules/azure-keyvault { };
+
+  azure-keyvault-administration = callPackage ../development/python-modules/azure-keyvault-administration { };
 
   azure-keyvault-certificates = callPackage ../development/python-modules/azure-keyvault-certificates { };
 
@@ -754,7 +768,7 @@ in {
 
   bandit = callPackage ../development/python-modules/bandit { };
 
-  bap = callPackage ../development/python-modules/bap { bap = pkgs.ocaml-ng.ocamlPackages_4_06.bap; };
+  bap = callPackage ../development/python-modules/bap { bap = pkgs.ocaml-ng.ocamlPackages_4_07.bap; };
 
   base58 = callPackage ../development/python-modules/base58 { };
 
@@ -1150,6 +1164,8 @@ in {
 
   ckcc-protocol = callPackage ../development/python-modules/ckcc-protocol { };
 
+  class-registry = callPackage ../development/python-modules/class-registry { };
+
   cld2-cffi = callPackage ../development/python-modules/cld2-cffi { };
 
   cleo = callPackage ../development/python-modules/cleo { };
@@ -1313,6 +1329,8 @@ in {
 
   cozy = callPackage ../development/python-modules/cozy { };
 
+  cppheaderparser = callPackage ../development/python-modules/cppheaderparser { };
+
   cppy = callPackage ../development/python-modules/cppy { };
 
   cram = callPackage ../development/python-modules/cram { };
@@ -1459,8 +1477,9 @@ in {
 
   datashape = callPackage ../development/python-modules/datashape { };
 
-  datatable =
-    callPackage ../development/python-modules/datatable { inherit (pkgs.llvmPackages) openmp libcxx libcxxabi; };
+  datatable = callPackage ../development/python-modules/datatable {
+    inherit (pkgs.llvmPackages) libcxx;
+  };
 
   dateparser = callPackage ../development/python-modules/dateparser { };
 
@@ -1868,6 +1887,8 @@ in {
   entrance = callPackage ../development/python-modules/entrance { routerFeatures = false; };
 
   entrance-with-router-features = callPackage ../development/python-modules/entrance { routerFeatures = true; };
+
+  entrypoint2 = callPackage ../development/python-modules/entrypoint2 { };
 
   entrypoints = callPackage ../development/python-modules/entrypoints { };
 
@@ -3479,6 +3500,8 @@ in {
 
   logzero = callPackage ../development/python-modules/logzero { };
 
+  lomond = callPackage ../development/python-modules/lomond { };
+
   loo-py = callPackage ../development/python-modules/loo-py { };
 
   lpod = callPackage ../development/python-modules/lpod { };
@@ -3815,6 +3838,8 @@ in {
 
   msgpack-numpy = callPackage ../development/python-modules/msgpack-numpy { };
 
+  mss = callPackage ../development/python-modules/mss { };
+
   msrestazure = callPackage ../development/python-modules/msrestazure { };
 
   msrest = callPackage ../development/python-modules/msrest { };
@@ -4049,6 +4074,8 @@ in {
   notify2 = callPackage ../development/python-modules/notify2 { };
 
   notify = callPackage ../development/python-modules/notify { };
+
+  notify-py = callPackage ../development/python-modules/notify-py { };
 
   notmuch = callPackage ../development/python-modules/notmuch { inherit (pkgs) notmuch; };
 
@@ -4471,6 +4498,8 @@ in {
 
   pkuseg = callPackage ../development/python-modules/pkuseg { };
 
+  python-csxcad = callPackage ../development/python-modules/python-csxcad { };
+
   pkutils = callPackage ../development/python-modules/pkutils { };
 
   plac = callPackage ../development/python-modules/plac { };
@@ -4675,6 +4704,8 @@ in {
 
   purepng = callPackage ../development/python-modules/purepng { };
 
+  pure-python-adb = callPackage ../development/python-modules/pure-python-adb { };
+
   pure-python-adb-homeassistant = callPackage ../development/python-modules/pure-python-adb-homeassistant { };
 
   purl = callPackage ../development/python-modules/purl { };
@@ -4704,6 +4735,8 @@ in {
   py4j = callPackage ../development/python-modules/py4j { };
 
   pyacoustid = callPackage ../development/python-modules/pyacoustid { };
+
+  pyads = callPackage ../development/python-modules/pyads { };
 
   pyaes = callPackage ../development/python-modules/pyaes { };
 
@@ -4861,8 +4894,6 @@ in {
   pydocumentdb = callPackage ../development/python-modules/pydocumentdb { };
 
   pydot = callPackage ../development/python-modules/pydot { inherit (pkgs) graphviz; };
-
-  pydot_ng = callPackage ../development/python-modules/pydot_ng { graphviz = pkgs.graphviz; };
 
   pydotplus = callPackage ../development/python-modules/pydotplus { };
 
@@ -5395,6 +5426,8 @@ in {
 
   pysolr = callPackage ../development/python-modules/pysolr { };
 
+  py-sonic = callPackage ../development/python-modules/py-sonic { };
+
   pysonos = callPackage ../development/python-modules/pysonos { };
 
   pysoundfile = self.soundfile; # Alias added 23-06-2019
@@ -5737,6 +5770,8 @@ in {
 
   python-multipart = callPackage ../development/python-modules/python-multipart { };
 
+  python-nest = callPackage ../development/python-modules/python-nest { };
+
   pythonnet = callPackage
     ../development/python-modules/pythonnet { # `mono >= 4.6` required to prevent crashes encountered with earlier versions.
       mono = pkgs.mono4;
@@ -5891,6 +5926,10 @@ in {
   pyvcf = callPackage ../development/python-modules/pyvcf { };
 
   pyviz-comms = callPackage ../development/python-modules/pyviz-comms { };
+
+  pyvips = callPackage ../development/python-modules/pyvips {
+    inherit (pkgs) pkg-config vips glib;
+  };
 
   pyvmomi = callPackage ../development/python-modules/pyvmomi { };
 
@@ -6076,6 +6115,8 @@ in {
   requests-aws4auth = callPackage ../development/python-modules/requests-aws4auth { };
 
   requests-cache = callPackage ../development/python-modules/requests-cache { };
+
+  requests-hawk = callPackage ../development/python-modules/requests-hawk { };
 
   requests = callPackage ../development/python-modules/requests { };
 
@@ -6501,6 +6542,8 @@ in {
     jre = pkgs.jre8; # TODO: remove override https://github.com/NixOS/nixpkgs/pull/89731
   };
 
+  skidl = callPackage ../development/python-modules/skidl { };
+
   sklearn-deap = callPackage ../development/python-modules/sklearn-deap { };
 
   skorch = callPackage ../development/python-modules/skorch { };
@@ -6673,6 +6716,8 @@ in {
   else
     callPackage ../development/python-modules/sphinx/2.nix { };
 
+  sphinx-argparse = callPackage ../development/python-modules/sphinx-argparse { };
+
   sphinx-jinja = callPackage ../development/python-modules/sphinx-jinja { };
 
   sphinx-navtree = callPackage ../development/python-modules/sphinx-navtree { };
@@ -6737,6 +6782,8 @@ in {
 
   sseclient = callPackage ../development/python-modules/sseclient { };
 
+  sseclient-py = callPackage ../development/python-modules/sseclient-py { };
+
   sshpubkeys = callPackage ../development/python-modules/sshpubkeys { };
 
   sshtunnel = callPackage ../development/python-modules/sshtunnel { };
@@ -6744,8 +6791,6 @@ in {
   sslib = callPackage ../development/python-modules/sslib { };
 
   sslyze = callPackage ../development/python-modules/sslyze { };
-
-  starfish = callPackage ../development/python-modules/starfish { };
 
   starlette = callPackage ../development/python-modules/starlette { };
 
@@ -6913,10 +6958,9 @@ in {
 
   tensorflow-build_2 = callPackage ../development/python-modules/tensorflow/2 {
     cudaSupport = pkgs.config.cudaSupport or false;
-    inherit (pkgs.linuxPackages) nvidia_x11;
-    cudatoolkit = pkgs.cudatoolkit_10;
-    cudnn = pkgs.cudnn_cudatoolkit_10;
-    nccl = pkgs.nccl_cudatoolkit_10;
+    cudatoolkit = pkgs.cudatoolkit_11;
+    cudnn = pkgs.cudnn_cudatoolkit_11;
+    nccl = pkgs.nccl_cudatoolkit_11;
     openssl = pkgs.openssl_1_1;
     inherit (pkgs.darwin.apple_sdk.frameworks) Foundation Security;
   };
@@ -7197,6 +7241,8 @@ in {
   typed-ast = callPackage ../development/python-modules/typed-ast { };
 
   typeguard = callPackage ../development/python-modules/typeguard { };
+
+  typer = callPackage ../development/python-modules/typer { };
 
   typesentry = callPackage ../development/python-modules/typesentry { };
 

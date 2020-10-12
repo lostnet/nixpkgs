@@ -140,6 +140,7 @@
   ./programs/mininet.nix
   ./programs/mtr.nix
   ./programs/nano.nix
+  ./programs/neovim.nix
   ./programs/nm-applet.nix
   ./programs/npm.nix
   ./programs/oblogout.nix
@@ -174,6 +175,7 @@
   ./programs/xfs_quota.nix
   ./programs/xonsh.nix
   ./programs/xss-lock.nix
+  ./programs/xwayland.nix
   ./programs/yabar.nix
   ./programs/zmap.nix
   ./programs/zsh/oh-my-zsh.nix
@@ -330,6 +332,7 @@
   ./services/desktops/tumbler.nix
   ./services/desktops/zeitgeist.nix
   ./services/development/bloop.nix
+  ./services/development/blackfire.nix
   ./services/development/hoogle.nix
   ./services/development/jupyter/default.nix
   ./services/development/jupyterhub/default.nix
