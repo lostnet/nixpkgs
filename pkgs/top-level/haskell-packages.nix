@@ -85,7 +85,7 @@ in {
       llvmPackages = pkgs.llvmPackages_9;
     };
     ghc8102 = callPackage ../development/compilers/ghc/8.10.2.nix {
-      bootPkgs = packages.ghc865Binary;
+      bootPkgs = packages.ghc8102Binary;
       inherit (buildPackages.python3Packages) sphinx;
       buildLlvmPackages = buildPackages.llvmPackages_9;
       llvmPackages = pkgs.llvmPackages_9;
