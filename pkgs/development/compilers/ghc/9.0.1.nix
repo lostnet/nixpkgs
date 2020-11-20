@@ -2,7 +2,7 @@
 
 # build-tools
 , bootPkgs
-, autoconf, automake, coreutils, fetchurl, perl, python3, m4, sphinx
+, autoconf, automake, coreutils, fetchurl, fetchpatch, perl, python3, m4, sphinx
 , bash
 
 , libiconv ? null, ncurses
@@ -107,6 +107,13 @@ stdenv.mkDerivation (rec {
 
   outputs = [ "out" "doc" ];
 
+  patches = [
+    (fetchpatch rec { # https://gitlab.haskell.org/ghc/ghc/-/commit/17d2f0a886f9f56ea408d2dd8b7f054021da19a4.patch
+     url = "https://gitlab.haskell.org/ghc/ghc/-/commit/17d2f0a886f9f56ea408d2dd8b7f054021da19a4.patch";
+     name = "pie";
+     sha256 = "0x8hy35ph4wc3g38yipwvsclrjd1zb0m1lf6xhmfqqhn3vdsp7mi";
+    })
+  ];
   postPatch = "patchShebangs .";
 
   # GHC is a bit confused on its cross terminology.
