@@ -136,6 +136,7 @@ stdenv.mkDerivation rec {
   # No building is necessary, but calling make without flags ironically
   # calls install-strip ...
   dontBuild = true;
+  hardeningDisable = [ "pie" ];
 
   # On Linux, use patchelf to modify the executables so that they can
   # find editline/gmp.

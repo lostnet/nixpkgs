@@ -32,6 +32,7 @@ let
     mkDerivation = drv: super.mkDerivation (drv // {
       doCheck = false;
       doHaddock = false;
+      hardeningDisable = [ "pie" ];
       enableExecutableProfiling = false;
       enableLibraryProfiling = false;
       enableSharedExecutables = false;

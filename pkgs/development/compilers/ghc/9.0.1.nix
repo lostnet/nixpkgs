@@ -21,8 +21,7 @@
   enableIntegerSimple ? !(stdenv.lib.any (stdenv.lib.meta.platformMatch stdenv.hostPlatform) gmp.meta.platforms), gmp
 
 , # If enabled, use -fPIC when compiling static libs.
-  enableRelocatedStaticLibs ? stdenv.targetPlatform != stdenv.hostPlatform
-
+  enableRelocatedStaticLibs ? true
   # aarch64 outputs otherwise exceed 2GB limit
 , enableProfiledLibs ? !stdenv.targetPlatform.isAarch64
 
@@ -216,7 +215,8 @@ stdenv.mkDerivation (rec {
 
   checkTarget = "test";
 
-  hardeningDisable = [ "format" ] ++ stdenv.lib.optional stdenv.targetPlatform.isMusl "pie";
+  #  hardeningDisable = [ "format" ] ++ stdenv.lib.optional stdenv.targetPlatform.isMusl "pie";
+  hardeningDisable = [ "format" "pie" ];
 
   postInstall = ''
     # Install the bash completion file.
